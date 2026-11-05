@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบสารบรรณอิเล็กทรอนิกส์ (e-Office) - ที่ทำการปกครองอำเภอขามทะเลสอ</title>
+  <!-- Google Fonts: Sarabun & Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sarabun: ['Sarabun', 'sans-serif'] },
+          colors: {
+            gov: {
+              50: '#f0f5ff',
+              100: '#e0ebff',
+              200: '#bcdeff',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af',
+              800: '#1e3a8a',
+              900: '#172554',
+              gold: '#d97706',
+              goldhover: '#b45309'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Embedded CSS Style -->
+  <style>
+    body { 
+      font-family: 'Sarabun', sans-serif; 
+    }
+
+    ::-webkit-scrollbar { 
+      width: 6px; 
+      height: 6px; 
+    }
+
+    ::-webkit-scrollbar-track { 
+      background: #f1f5f9; 
+    }
+
+    ::-webkit-scrollbar-thumb { 
+      background: #cbd5e1; 
+      border-radius: 99px; 
+    }
+
+    ::-webkit-scrollbar-thumb:hover { 
+      background: #94a3b8; 
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.85rem;
+      border-radius: 0.75rem;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: #475569;
+      transition: all 0.15s ease-in-out;
+    }
+
+    .nav-btn:hover { 
+      background-color: #f1f5f9; 
+      color: #1e293b; 
+    }
+
+    .nav-btn.active { 
+      background-color: #eff6ff; 
+      color: #1d4ed8; 
+      font-weight: 700; 
+    }
+
+    .pill-tab {
+      padding: 0.4rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #475569;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+      transition: all 0.15s ease-in-out;
+      cursor: pointer;
+    }
+
+    .pill-tab:hover { 
+      background-color: #f8fafc; 
+    }
+
+    .pill-tab.active { 
+      background-color: #2563eb; 
+      color: #ffffff; 
+      border-color: #2563eb; 
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25); 
+    }
+
+    .mobile-nav-btn {
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+      background-color: #f1f5f9;
+      color: #334155;
+    }
+
+    /* AUTH / LOGIN PAGE STYLING */
+    #viewAuth {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      overflow: hidden;
+      font-family: 'Prompt', 'Sarabun', sans-serif;
+      background:
+        linear-gradient(180deg, #2f7fd8 0%, #4a95e2 40%, #0a3f94 62%, #052a63 100%) left top / 50% 100% no-repeat,
+        linear-gradient(90deg, #eef5ff, #e6f0fd) right top / 50% 100% no-repeat;
+    }
+
+    .login-stage {
+      width: 100%;
+      height: 100%;
+      max-width: 1707px;
+      max-height: 921px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 2rem;
+      box-sizing: border-box;
+    }
+
+    .lg-title {
+      color: #ffffff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .lg-t1 { font-size: 1.875rem; font-weight: 700; }
+    .lg-t2 { font-size: 3rem; font-weight: 800; }
+    .lg-t2 span { color: #fde047; }
+    .lg-t3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; }
+
+    .lg-card {
+      background: #ffffff;
+      padding: 2.5rem 2rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lg-h1 { font-size: 1.5rem; font-weight: 700; text-align: center; color: #0f172a; }
+    .lg-sub { font-size: 0.875rem; text-align: center; color: #64748b; margin-bottom: 0.25rem; }
+    .lg-loc { font-size: 0.75rem; text-align: center; color: #2563eb; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.25rem; margin-bottom: 1.5rem; }
+    .lg-loc svg { width: 14px; height: 14px; }
+
+    .lg-field {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .lg-ico {
+      position: absolute;
+      left: 1rem;
+      width: 18px;
+      height: 18px;
+      color: #94a3b8;
+    }
+    .lg-field input {
+      width: 100%;
+      padding: 0.75rem 2.5rem 0.75rem 2.75rem;
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+      font-size: 0.875rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .lg-field input:focus {
+      border-color: #2563eb;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .lg-icon-btn {
+      position: absolute;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem;
+    }
+    .lg-icon-btn svg { width: 18px; height: 18px; }
+
+    .lg-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .lg-check {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      color: #475569;
+    }
+    .lg-check input { display: none; }
+    .lg-check .box {
+      width: 16px;
+      height: 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lg-check input:checked + .box {
+      background-color: #2563eb;
+      border-color: #2563eb;
+    }
+    .lg-link {
+      background: none;
+      border: none;
+      color: #2563eb;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .lg-btn-primary {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #2563eb;
+      color: #ffffff;
+      font-weight: 600;
+      border-radius: 0.75rem;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+      transition: all 0.2s;
+    }
+    .lg-btn-primary:hover { background-color: #1d4ed8; }
+    .lg-btn-primary svg { width: 18px; height: 18px; }
+
+    .lg-btn-outline {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: transparent;
+      color: #475569;
+      font-weight: 600;
+      border-radius: 0.75rem;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      transition: all 0.2s;
+    }
+    .lg-btn-outline:hover { background-color: #f8fafc; }
+    .lg-btn-outline svg { width: 18px; height: 18px; }
+
+    .lg-divider { height: 1px; background-color: #f1f5f9; margin: 1.5rem 0 1rem; }
+    .lg-foot { font-size: 0.7rem; color: #94a3b8; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.25rem; }
+    .lg-foot svg { width: 14px; height: 14px; }
+    .lg-error { font-size: 0.75rem; color: #ef4444; margin-top: 0.25rem; }
+
+    /* MODAL STYLING FOR AUTH */
+    .am-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 70;
+      padding: 1rem;
+    }
+    .am-card {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+    }
+    .am-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      font-size: 1.5rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: #94a3b8;
+    }
+    .am-card h2 { font-size: 1.25rem; font-weight: 700; color: #0f172a; }
+    .am-sub { font-size: 0.8rem; color: #64748b; margin-bottom: 1.25rem; }
+    .am-card label { display: block; font-size: 0.75rem; font-weight: 600; color: #475569; margin-bottom: 0.75rem; }
+    .am-card input, .am-card select {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 0.5rem;
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+      outline: none;
+    }
+    .am-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .am-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem; }
+    .am-btn { padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: 1px solid #cbd5e1; background: #fff; }
+    .am-btn.primary { background: #2563eb; color: #fff; border: none; }
+    .am-msg { font-size: 0.75rem; color: #ef4444; margin-top: 0.5rem; }
+    .am-msg.ok { color: #10b981; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- TOAST NOTIFICATIONS -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 space-y-2 pointer-events-none"></div>
+
+  <!-- ================= AUTH / LOGIN VIEW ================= -->
+  <div id="viewAuth">
+    <div id="loginStage" class="login-stage">
+      <div class="lg-title">
+        <div class="lg-t1">ระบบสารบรรณอิเล็กทรอนิกส์</div>
+        <div class="lg-t2">อำเภอ<span>ขามทะเลสอ</span></div>
+        <div class="lg-t3">จังหวัดนครราชสีมา</div>
+        <p class="lg-desc">ระบบส่งสารและเอกสารออนไลน์ เพื่อการบริหารงานราชการ<br>ที่รวดเร็ว สะดวก ปลอดภัย และมีประสิทธิภาพ</p>
+      </div>
+
+      <form id="loginForm" class="lg-card" onsubmit="handleLoginSubmit(event)" novalidate>
+        <h1 class="lg-h1">เข้าสู่ระบบ</h1>
+        <p class="lg-sub">ระบบส่งสารและเอกสารออนไลน์</p>
+        <p class="lg-loc">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22.5s7.2-6.3 7.2-12.4a7.2 7.2 0 1 0-14.4 0c0 6.1 7.2 12.4 7.2 12.4z" fill="currentColor"/><circle cx="12" cy="10" r="2.7" fill="#fff"/></svg>
+          <span>อำเภอขามทะเลสอ&nbsp; จังหวัดนครราชสีมา</span>
+        </p>
+
+        <label class="lg-field">
+          <svg class="lg-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.6" r="4.3" fill="currentColor"/><path d="M3.6 21c0-4.6 3.7-7.4 8.4-7.4s8.4 2.8 8.4 7.4z" fill="currentColor"/></svg>
+          <input type="text" id="loginUser" placeholder="ชื่อผู้ใช้งาน" autocomplete="username" autocapitalize="none" spellcheck="false" aria-label="ชื่อผู้ใช้งาน">
+          <button type="button" id="loginUserClear" class="lg-icon-btn" aria-label="ล้างชื่อผู้ใช้งาน"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M8.6 8.6l6.8 6.8M15.4 8.6l-6.8 6.8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+        </label>
+
+        <label class="lg-field">
+          <svg class="lg-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 10.5V7.6a4.5 4.5 0 0 1 9 0v2.9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11.5" rx="3" fill="currentColor"/><circle cx="12" cy="15.2" r="1.6" fill="#fff"/><rect x="11.2" y="15.4" width="1.6" height="3.2" rx=".8" fill="#fff"/></svg>
+          <input type="password" id="loginPass" placeholder="รหัสผ่าน" autocomplete="current-password" aria-label="รหัสผ่าน">
+          <button type="button" id="loginPassToggle" class="lg-icon-btn" aria-label="แสดงรหัสผ่าน" aria-pressed="false">
+            <svg id="eyeOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg>
+            <svg id="eyeOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </label>
+        <div id="loginError" class="lg-error" role="alert" hidden></div>
+
+        <div class="lg-row">
+          <label class="lg-check">
+            <input type="checkbox" id="loginRemember" checked>
+            <span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span>จดจำการเข้าสู่ระบบ</span>
+          </label>
+          <button type="button" class="lg-link" onclick="openForgotModal()">ลืมรหัสผ่าน ?</button>
+        </div>
+
+        <button type="submit" id="loginSubmitBtn" class="lg-btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 5.5l6.5 6.5-6.5 6.5"/></svg>
+          <span>เข้าสู่ระบบ</span>
+        </button>
+        <button type="button" class="lg-btn-outline" onclick="openRegisterModal()">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9.5" cy="7.8" r="4.1" fill="currentColor"/><path d="M1.8 21c0-4.2 3.5-6.7 7.7-6.7s7.7 2.5 7.7 6.7z" fill="currentColor"/><path d="M19.4 7.5v6.4M16.2 10.7h6.4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          <span>สมัครสมาชิก</span>
+        </button>
+
+        <div class="lg-divider"></div>
+        <p class="lg-foot">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8.2 3v6.2c0 5.1-3.5 9.4-8.2 10.8-4.7-1.4-8.2-5.7-8.2-10.8V5z" fill="currentColor"/><path d="M8.4 12l2.5 2.5 4.7-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>สำหรับเจ้าหน้าที่อำเภอขามทะเลสอ จังหวัดนครราชสีมา</span>
+        </p>
+      </form>
+    </div>
+
+    <!-- REGISTER MODAL -->
+    <div id="registerModal" class="am-backdrop" hidden>
+      <form class="am-card" onsubmit="handleRegisterSubmit(event)" novalidate>
+        <button type="button" class="am-close" onclick="closeAuthModals()" aria-label="ปิด">&times;</button>
+        <h2>สมัครสมาชิก</h2>
+        <p class="am-sub">สร้างบัญชีสำหรับเจ้าหน้าที่ เพื่อเข้าใช้งานระบบสารบรรณอิเล็กทรอนิกส์</p>
+        <label>ชื่อ - นามสกุล<input type="text" id="regFullName" autocomplete="name" placeholder="เช่น สมชาย ใจดี"></label>
+        <div class="am-grid">
+          <label>ชื่อผู้ใช้งาน<input type="text" id="regUsername" autocomplete="username" autocapitalize="none" placeholder="อย่างน้อย 3 ตัวอักษร"></label>
+          <label>เบอร์โทรศัพท์<input type="tel" id="regPhone" autocomplete="tel" inputmode="tel" placeholder="เช่น 0812345678"></label>
+        </div>
+        <label>หน่วยงานต้นสังกัด<select id="regAgency"></select></label>
+        <div class="am-grid">
+          <label>รหัสผ่าน<input type="password" id="regPass" autocomplete="new-password" placeholder="อย่างน้อย 6 ตัวอักษร"></label>
+          <label>ยืนยันรหัสผ่าน<input type="password" id="regPass2" autocomplete="new-password" placeholder="กรอกรหัสผ่านอีกครั้ง"></label>
+        </div>
+        <p id="regMsg" class="am-msg" role="alert"></p>
+        <div class="am-actions">
+          <button type="button" class="am-btn" onclick="closeAuthModals()">ยกเลิก</button>
+          <button type="submit" id="regSubmitBtn" class="am-btn primary">สมัครสมาชิก</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- FORGOT PASSWORD MODAL -->
+    <div id="forgotModal" class="am-backdrop" hidden>
+      <form class="am-card" onsubmit="handleForgotSubmit(event)" novalidate>
+        <button type="button" class="am-close" onclick="closeAuthModals()" aria-label="ปิด">&times;</button>
+        <h2>ลืมรหัสผ่าน</h2>
+        <p class="am-sub">ยืนยันตัวตนด้วยชื่อผู้ใช้งานและเบอร์โทรศัพท์ที่ลงทะเบียนไว้ แล้วตั้งรหัสผ่านใหม่</p>
+        <div class="am-grid">
+          <label>ชื่อผู้ใช้งาน<input type="text" id="fgUsername" autocomplete="username" autocapitalize="none"></label>
+          <label>เบอร์โทรศัพท์ที่ลงทะเบียน<input type="tel" id="fgPhone" autocomplete="tel" inputmode="tel"></label>
+        </div>
+        <div class="am-grid">
+          <label>รหัสผ่านใหม่<input type="password" id="fgPass" autocomplete="new-password" placeholder="อย่างน้อย 6 ตัวอักษร"></label>
+          <label>ยืนยันรหัสผ่านใหม่<input type="password" id="fgPass2" autocomplete="new-password"></label>
+        </div>
+        <p id="fgMsg" class="am-msg" role="alert"></p>
+        <div class="am-actions">
+          <button type="button" class="am-btn" onclick="closeAuthModals()">ยกเลิก</button>
+          <button type="submit" id="fgSubmitBtn" class="am-btn primary">ตั้งรหัสผ่านใหม่</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MAIN APP CONTAINER ================= -->
+  <div id="viewMain" class="hidden flex-col min-h-screen">
+    
+    <!-- TOP NAVIGATION BAR -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm px-4 sm:px-6 py-3">
+      <div class="max-w-[1600px] mx-auto flex items-center justify-between">
+        
+        <!-- Brand / Logo -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
+          <div class="w-11 h-11 bg-gradient-to-tr from-gov-700 to-gov-500 text-white rounded-2xl flex items-center justify-center font-bold text-xl shadow-md">
+            <i class="fa-solid fa-landmark"></i>
+          </div>
+          <div>
+            <h1 class="font-extrabold text-slate-900 text-sm sm:text-base leading-tight">ระบบสารบรรณอิเล็กทรอนิกส์</h1>
+            <p class="text-[11px] text-slate-500 font-semibold">ที่ทำการปกครองอำเภอขามทะเลสอ จ.นครราชสีมา</p>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs (Desktop) -->
+        <nav class="hidden xl:flex items-center space-x-1">
+          <button onclick="switchTab('dashboard')" id="navDashboard" class="nav-btn active"><i class="fa-solid fa-house"></i><span>หน้าหลัก</span></button>
+          <button onclick="switchTab('inbox')" id="navInbox" class="nav-btn"><i class="fa-solid fa-inbox"></i><span>หนังสือรับ</span><span id="badgeInboxCount" class="bg-amber-500 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold ml-1">0</span></button>
+          <button onclick="switchTab('outbox')" id="navOutbox" class="nav-btn"><i class="fa-solid fa-paper-plane"></i><span>หนังสือส่ง</span></button>
+          <button onclick="switchTab('senddoc')" id="navSenddoc" class="nav-btn bg-gov-50 text-gov-700 border border-gov-200"><i class="fa-solid fa-circle-plus text-gov-600"></i><span>ลงรับ/ส่งหนังสือ</span></button>
+          <button onclick="switchTab('tracking')" id="navTracking" class="nav-btn"><i class="fa-solid fa-route"></i><span>ติดตามเอกสาร</span></button>
+          <button onclick="switchTab('reports')" id="navReports" class="nav-btn"><i class="fa-solid fa-chart-pie"></i><span>รายงานสถิติ</span></button>
+          <button onclick="switchTab('directory')" id="navDirectory" class="nav-btn"><i class="fa-solid fa-address-book"></i><span>ทำเนียบหน่วยงาน</span></button>
+        </nav>
+
+        <!-- User Profile & Logout -->
+        <div class="flex items-center space-x-3">
+          <div class="flex items-center space-x-2.5 border-r border-slate-200 pr-3 sm:pr-4">
+            <div class="w-10 h-10 bg-gov-100 text-gov-700 rounded-full flex items-center justify-center font-bold">
+              <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <div class="text-left hidden sm:block">
+              <div id="displayUserName" class="text-xs font-bold text-slate-900"></div>
+              <div id="displayUserAgency" class="text-[10px] text-gov-600 font-semibold truncate max-w-[150px]"></div>
+            </div>
+          </div>
+          <button onclick="logout()" class="text-slate-400 hover:text-red-600 p-2 rounded-xl hover:bg-red-50 transition" title="ออกจากระบบ">
+            <i class="fa-solid fa-right-from-bracket text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Sub-Navigation -->
+      <div class="flex xl:hidden items-center space-x-1 overflow-x-auto pt-3 pb-1 border-t border-slate-100 mt-2">
+        <button onclick="switchTab('dashboard')" id="mNavDashboard" class="mobile-nav-btn active">หน้าหลัก</button>
+        <button onclick="switchTab('inbox')" id="mNavInbox" class="mobile-nav-btn">หนังสือรับ (<span id="mBadgeInboxCount">0</span>)</button>
+        <button onclick="switchTab('outbox')" id="mNavOutbox" class="mobile-nav-btn">หนังสือส่ง</button>
+        <button onclick="switchTab('senddoc')" id="mNavSenddoc" class="mobile-nav-btn text-gov-600 font-bold">+ ลงรับ/ส่งหนังสือ</button>
+        <button onclick="switchTab('tracking')" id="mNavTracking" class="mobile-nav-btn">ติดตามเอกสาร</button>
+        <button onclick="switchTab('reports')" id="mNavReports" class="mobile-nav-btn">รายงานสถิติ</button>
+        <button onclick="switchTab('directory')" id="mNavDirectory" class="mobile-nav-btn">ทำเนียบหน่วยงาน</button>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT VIEW AREA -->
+    <main class="max-w-[1600px] w-full mx-auto p-4 sm:p-6 flex-grow space-y-6">
+
+      <!-- ================= TAB 1: DASHBOARD ================= -->
+      <section id="tabContentDashboard" class="space-y-6">
+        <!-- Welcome Banner -->
+        <div class="bg-gradient-to-r from-gov-800 via-gov-700 to-indigo-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-center justify-between relative overflow-hidden">
+          <div class="absolute right-0 bottom-0 opacity-10 transform translate-x-10 translate-y-10 pointer-events-none">
+            <i class="fa-solid fa-landmark text-[250px]"></i>
+          </div>
+          <div class="space-y-2 z-10 text-center md:text-left mb-6 md:mb-0">
+            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full font-semibold backdrop-blur-md">ระบบสารบรรณอิเล็กทรอนิกส์ภาครัฐ (e-Office)</span>
+            <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">E-Office อำเภอขามทะเลสอ</h2>
+            <p class="text-xs sm:text-sm text-blue-100 font-light max-w-2xl">ศูนย์บริหารจัดการหนังสือราชการ หนังสือรับ หนังสือส่ง และการประสานงานเครือข่ายหน่วยงานภายในอำเภอขามทะเลสอ จังหวัดนครราชสีมา</p>
+          </div>
+          <div class="flex flex-wrap gap-3 z-10">
+            <button onclick="switchTab('senddoc')" class="bg-white text-gov-800 hover:bg-blue-50 font-bold px-5 py-3 rounded-2xl text-xs shadow-lg transition flex items-center space-x-2">
+              <i class="fa-solid fa-paper-plane text-gov-600"></i>
+              <span>ลงรับ / ส่งหนังสือด่วน</span>
+            </button>
+            <button onclick="switchTab('inbox')" class="bg-gov-600 hover:bg-gov-500 text-white font-bold px-5 py-3 rounded-2xl text-xs shadow-lg transition flex items-center space-x-2">
+              <i class="fa-solid fa-inbox"></i>
+              <span>ตรวจสอบหนังสือรับ (<span id="bannerPendingCount">0</span>)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div class="space-y-1">
+              <span class="text-xs font-semibold text-slate-500">หนังสือรับทั้งหมด</span>
+              <div class="text-2xl font-black text-slate-900" id="statTotalInbox">0</div>
+            </div>
+            <div class="w-12 h-12 bg-blue-50 text-gov-600 rounded-2xl flex items-center justify-center text-xl shadow-inner">
+              <i class="fa-solid fa-inbox"></i>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div class="space-y-1">
+              <span class="text-xs font-semibold text-slate-500">รอลงรับ / ค้างดำเนินการ</span>
+              <div class="text-2xl font-black text-amber-600" id="statPendingCount">0</div>
+              <div class="text-[11px] text-amber-600 font-medium"><i class="fa-solid fa-clock mr-1"></i>รอลงรับ</div>
+            </div>
+            <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-xl shadow-inner">
+              <i class="fa-solid fa-hourglass-half"></i>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div class="space-y-1">
+              <span class="text-xs font-semibold text-slate-500">หนังสือส่งออกทั้งหมด</span>
+              <div class="text-2xl font-black text-slate-900" id="statTotalOutbox">0</div>
+            </div>
+            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-xl shadow-inner">
+              <i class="fa-solid fa-paper-plane"></i>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div class="space-y-1">
+              <span class="text-xs font-semibold text-slate-500">หน่วยงานในเครือข่าย</span>
+              <div class="text-2xl font-black text-gov-700" id="statAgencyCount">0</div>
+            </div>
+            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-xl shadow-inner">
+              <i class="fa-solid fa-network-wired"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Documents Preview Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2">
+                <i class="fa-solid fa-bolt text-amber-500"></i>
+                <span>หนังสือรับล่าสุดที่ต้องดำเนินการ</span>
+              </h3>
+              <button onclick="switchTab('inbox')" class="text-xs font-semibold text-gov-600 hover:underline">ดูทั้งหมด</button>
+            </div>
+            <div id="dashboardInboxList" class="space-y-3"></div>
+          </div>
+
+          <div class="space-y-6">
+            <div class="bg-gradient-to-br from-slate-900 to-gov-900 text-white rounded-2xl p-5 shadow-sm space-y-3">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gov-600 rounded-xl flex items-center justify-center font-bold">
+                  <i class="fa-solid fa-phone"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-xs">ติดต่อสารบรรณอำเภอ</h4>
+                  <p class="text-[11px] text-slate-300">โทร. 0-4433-3266 </p>
+                </div>
+              </div>
+              <div class="text-[11px] text-slate-400 border-t border-slate-800 pt-2">
+                เวลาทำการ: จันทร์ - ศุกร์ (08.30 - 16.30 น.)
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 2: INBOX (หนังสือรับ) ================= -->
+      <section id="tabContentInbox" class="hidden space-y-6">
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-base font-extrabold text-slate-900 flex items-center space-x-2">
+                <i class="fa-solid fa-inbox text-gov-600"></i>
+                <span>ทะเบียนหนังสือรับราชการ (Inbox)</span>
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">รายการหนังสือที่ส่งมายังหน่วยงานของคุณ — เฉพาะหน่วยงานปลายทางเท่านั้นที่ลงรับและปิดงานได้</p>
+            </div>
+            <div class="flex items-center space-x-2">
+              <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="inboxSearch" oninput="renderInboxTable()" placeholder="ค้นหาเลขที่, เรื่อง, ผู้ส่ง..." class="pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs w-64 focus:outline-none focus:ring-2 focus:ring-gov-500">
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-2 overflow-x-auto pb-1">
+            <button onclick="setInboxFilter('all')" class="pill-tab active" data-inbox="all">ทั้งหมด</button>
+            <button onclick="setInboxFilter('pending')" class="pill-tab" data-inbox="pending">รอรับ <span class="bg-amber-400 text-slate-900 px-1.5 py-0.2 rounded-full text-[10px] ml-1 font-bold" id="filterPendingBadge">0</span></button>
+            <button onclick="setInboxFilter('received')" class="pill-tab" data-inbox="received">รับแล้ว / กำลังดำเนินการ</button>
+            <button onclick="setInboxFilter('closed')" class="pill-tab" data-inbox="closed">ปิดงานแล้ว</button>
+          </div>
+
+          <div class="overflow-x-auto rounded-2xl border border-slate-200">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-bold text-slate-600">
+                  <th class="p-3.5 w-12 text-center">#</th>
+                  <th class="p-3.5 w-24">เลขรับ</th>
+                  <th class="p-3.5 w-36">วันที่/เวลา</th>
+                  <th class="p-3.5 w-36">เลขที่หนังสือ</th>
+                  <th class="p-3.5 w-28">ลงวันที่</th>
+                  <th class="p-3.5">เรื่อง / จาก / เรียน</th>
+                  <th class="p-3.5 w-24 text-center">สถานะ</th>
+                  <th class="p-3.5 w-32 text-center">การจัดการ</th>
+                </tr>
+              </thead>
+              <tbody id="inboxTableBody" class="divide-y divide-slate-100 text-xs"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 3: OUTBOX (หนังสือส่ง) ================= -->
+      <section id="tabContentOutbox" class="hidden space-y-6">
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-base font-extrabold text-slate-900 flex items-center space-x-2">
+                <i class="fa-solid fa-paper-plane text-gov-600"></i>
+                <span>ทะเบียนหนังสือส่งออก (Outbox)</span>
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">รายการหนังสือที่หน่วยงานของคุณส่งออก — ผู้ส่งติดตามได้ว่าเอกสารถึงไหนแล้ว แต่ลงรับแทนปลายทางไม่ได้</p>
+            </div>
+            <button onclick="switchTab('senddoc')" class="bg-gov-600 hover:bg-gov-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-sm flex items-center space-x-2">
+              <i class="fa-solid fa-plus"></i>
+              <span>สร้างหนังสือส่งใหม่</span>
+            </button>
+          </div>
+
+          <div class="overflow-x-auto rounded-2xl border border-slate-200">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-bold text-slate-600">
+                  <th class="p-3.5 w-12 text-center">#</th>
+                  <th class="p-3.5 w-32">เลขส่งออก</th>
+                  <th class="p-3.5 w-36">วันที่ส่ง</th>
+                  <th class="p-3.5 w-36">เลขที่หนังสือ</th>
+                  <th class="p-3.5">เรื่อง / หน่วยงานปลายทาง</th>
+                  <th class="p-3.5 w-28 text-center">ความเร่งด่วน</th>
+                  <th class="p-3.5 w-28 text-center">สถานะส่ง</th>
+                  <th class="p-3.5 w-44 text-center">ดู / ติดตาม</th>
+                </tr>
+              </thead>
+              <tbody id="outboxTableBody" class="divide-y divide-slate-100 text-xs"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 4: SEND DOCUMENT ================= -->
+      <section id="tabContentSenddoc" class="hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm max-w-4xl mx-auto space-y-6">
+          <div class="border-b border-slate-100 pb-4">
+            <h2 class="text-lg font-extrabold text-slate-900 flex items-center space-x-2">
+              <i class="fa-solid fa-circle-plus text-gov-600"></i>
+              <span>ระบบลงรับเอกสารสารบรรณภายนอก / ส่งหนังสือราชการ</span>
+            </h2>
+            <p class="text-xs text-slate-500 mt-1">สร้าง ลงทะเบียนรับส่งหนังสือราชการอิเล็กทรอนิกส์ไปยังหน่วยงานในอำเภอขามทะเลสอหรือหน่วยงานภายนอก</p>
+          </div>
+
+          <form onsubmit="handleDispatchDocument(event)" class="space-y-4 text-xs sm:text-sm">
+            <div class="rounded-2xl border border-slate-200 p-4 sm:p-5 space-y-4">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-gov-600 text-white flex items-center justify-center text-xs font-bold">1</span>
+                <div><div class="font-extrabold text-slate-900 text-sm sm:text-base leading-tight">ต้นทาง — ผู้ส่งหนังสือ</div><div class="text-[11px] text-slate-500 mt-0.5">เลือกหน่วยงานที่ส่งหนังสือฉบับนี้</div></div>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1.5"><i class="fa-solid fa-paper-plane mr-1 text-gov-600"></i> จาก (หน่วยงานต้นทาง)</label>
+                <select id="sendFromAgency" required class="w-full border border-slate-300 rounded-xl p-3 bg-slate-50 font-medium focus:ring-2 focus:ring-gov-500"></select>
+                <input type="text" id="sendFromOther" hidden placeholder="ระบุชื่อหน่วยงานต้นทาง" class="w-full border border-slate-300 rounded-xl p-3 bg-slate-50 font-medium focus:ring-2 focus:ring-gov-500 mt-2">
+              </div>
+            </div>
+
+            <div class="flex justify-center text-gov-600 -my-1" aria-hidden="true"><i class="fa-solid fa-arrow-down"></i></div>
+
+            <div class="rounded-2xl border border-slate-200 p-4 sm:p-5 space-y-4">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-gov-600 text-white flex items-center justify-center text-xs font-bold">2</span>
+                <div><div class="font-extrabold text-slate-900 text-sm sm:text-base leading-tight">ปลายทาง — ผู้รับหนังสือ</div><div class="text-[11px] text-slate-500 mt-0.5">เฉพาะหน่วยงานปลายทางเท่านั้นที่ลงรับและปิดงานได้</div></div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1.5"><i class="fa-solid fa-building-columns mr-1 text-gov-600"></i> หน่วยงานปลายทาง (เลือกจากทำเนียบ)</label>
+                  <select id="sendTargetAgency" required class="w-full border border-slate-300 rounded-xl p-3 bg-slate-50 font-medium focus:ring-2 focus:ring-gov-500"></select>
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1.5"><i class="fa-solid fa-user-pen mr-1 text-gov-600"></i> เรียน / ผู้รับปฏิบัติ</label>
+                  <input type="text" id="sendSigner" required placeholder="ระบุผู้รับ เช่น นายอำเภอขามทะเลสอ" class="w-full border border-slate-300 rounded-xl p-3 bg-slate-50 font-medium focus:ring-2 focus:ring-gov-500">
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 p-4 sm:p-5 space-y-4">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-gov-600 text-white flex items-center justify-center text-xs font-bold">3</span>
+                <div><div class="font-extrabold text-slate-900 text-sm sm:text-base leading-tight">รายละเอียดหนังสือ</div><div class="text-[11px] text-slate-500 mt-0.5">เลขที่ วันที่ เรื่อง และความเร่งด่วน</div></div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1.5"><i class="fa-solid fa-barcode mr-1 text-gov-600"></i> เลขที่หนังสือ</label>
+                  <input type="text" id="sendDocNo" required placeholder="เช่น นม 0017.2/ว 123" class="w-full border border-slate-300 rounded-xl p-3 bg-slate-50 font-medium focus:ring-2 focus:ring-gov-500">
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1.5"><i class="fa-solid fa-calendar mr-1 text-gov-600"></i> ลงวันที่</label>
+                  <input type="text" id="sendDocDate" required placeholder="เช่น 1 มกราคม 2570" class="w-full border border-slate-300 rounded-xl p-3 bg-slate-50 font-medium focus:ring-2 focus:ring-gov-500">
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="sm:col-span-2">
+                  <label class="block font-bold text-slate-700 mb-1.5"><i class="fa-solid fa-heading mr-1 text-gov-600"></i> เรื่องหนังสือ</label>
+                  <input type="text" id="sendSubject" required placeholder="ระบุเรื่องหนังสือราชการ" class="w-full border border-slate-300 rounded-xl p-3 bg-slate-50 font-medium focus:ring-2 focus:ring-gov-500">
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1.5"><i class="fa-solid fa-gauge-high mr-1 text-gov-600"></i> ชั้นความเร่งด่วน</label>
+                  <select id="sendUrgency" class="w-full border border-slate-300 rounded-xl p-3 bg-slate-50 font-medium focus:ring-2 focus:ring-gov-500">
+                    <option value="ปกติ">ปกติ</option>
+                    <option value="ด่วน">ด่วน</option>
+                    <option value="ด่วนที่สุด">ด่วนที่สุด</option>
+                    <option value="ด่วนที่สุดพิเศษ">ด่วนที่สุดพิเศษ (⚡ Flash)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 p-4 sm:p-5 space-y-4">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-gov-600 text-white flex items-center justify-center text-xs font-bold">4</span>
+                <div><div class="font-extrabold text-slate-900 text-sm sm:text-base leading-tight">แนบไฟล์เอกสารราชการ</div><div class="text-[11px] text-slate-500 mt-0.5">PDF หรือไฟล์สแกนของหนังสือ</div></div>
+              </div>
+              <div>
+                <input type="file" id="sendFileInput" class="hidden" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                <div id="sendDropzone" tabindex="0" role="button" aria-label="เลือกไฟล์เอกสารราชการ" class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center bg-slate-50 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-gov-500 transition cursor-pointer">
+                  <i class="fa-solid fa-cloud-arrow-up text-3xl text-gov-600 mb-2"></i>
+                  <div class="font-bold text-slate-700">คลิกเพื่ออัปโหลดไฟล์ PDF หรือลากไฟล์มาวางที่นี่</div>
+                  <div class="text-[11px] text-slate-400 mt-1">รองรับไฟล์ .pdf, .doc, .docx, .jpg, .png (ขนาดไม่เกิน 25 MB ต่อไฟล์)</div>
+                </div>
+                <div id="sendPreview" class="paper-box" hidden></div>
+              </div>
+            </div>
+
+            <div class="pt-4 flex items-center justify-end space-x-3 border-t border-slate-100">
+              <button type="button" onclick="switchTab('dashboard')" class="px-5 py-3 border border-slate-300 text-slate-700 rounded-xl font-bold hover:bg-slate-50 transition">ยกเลิก</button>
+              <button type="submit" class="px-6 py-3 bg-gov-600 hover:bg-gov-700 text-white rounded-xl font-bold shadow-lg shadow-gov-600/30 transition flex items-center space-x-2">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>ลงทะเบียนและบันทึกข้อมูลเอกสาร</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ================= TAB 5: TRACKING ================= -->
+      <section id="tabContentTracking" class="hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm max-w-4xl mx-auto space-y-6">
+          <div class="border-b border-slate-100 pb-4">
+            <h2 class="text-lg font-extrabold text-slate-900 flex items-center space-x-2">
+              <i class="fa-solid fa-route text-gov-600"></i>
+              <span>ระบบติดตามสถานะวงรอบเอกสาร (Document Tracking Timeline)</span>
+            </h2>
+            <p class="text-xs text-slate-500 mt-1">ตรวจสอบสถานะการดำเนินงานของหนังสือราชการแบบเรียลไทม์ ตั้งแต่ต้นทางจนถึงการปิดงาน</p>
+          </div>
+
+          <div class="flex items-center space-x-3">
+            <div class="relative flex-grow">
+              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              <input type="text" id="trackingSearchInput" placeholder="กรอกเลขที่หนังสือหรือคำค้นจากชื่อเรื่อง..." class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm font-medium focus:ring-2 focus:ring-gov-500">
+            </div>
+            <button onclick="runDocumentTracking()" class="bg-gov-600 hover:bg-gov-700 text-white font-bold px-6 py-3 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center space-x-2">
+              <i class="fa-solid fa-search"></i>
+              <span>ค้นหาเอกสาร</span>
+            </button>
+          </div>
+
+          <div id="trackingResultContainer" class="bg-slate-50 rounded-2xl border border-slate-200 p-6 space-y-6">
+            <div class="text-center py-10 text-slate-400">
+              <i class="fa-solid fa-route text-4xl mb-2 opacity-50 block"></i>
+              <span>กรุณากรอกเลขที่หนังสือหรือเลือกเอกสารจากทะเบียนเพื่อดูเส้นทางการเดินทางของหนังสือราชการ</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 6: REPORTS ================= -->
+      <section id="tabContentReports" class="hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+            <div>
+              <h2 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center space-x-2">
+                <i class="fa-solid fa-chart-pie text-gov-600"></i>
+                <span>รายงานสถิติงานสารบรรณ</span>
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">อำเภอขามทะเลสอ จังหวัดนครราชสีมา — สรุปจากข้อมูลที่บันทึกในระบบ</p>
+            </div>
+            <button onclick="window.print()" class="bg-gov-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow hover:bg-gov-700">
+              <i class="fa-solid fa-print mr-1"></i> พิมพ์รายงาน
+            </button>
+          </div>
+          <div id="reportContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 7: DIRECTORY ================= -->
+      <section id="tabContentDirectory" class="hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+            <div>
+              <h2 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center space-x-2">
+                <i class="fa-solid fa-address-book text-gov-600"></i>
+                <span>ทำเนียบส่วนราชการและหน่วยงานภายในอำเภอขามทะเลสอ</span>
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">รายชื่อหน่วยงานราชการ สถานศึกษา อปท. และรัฐวิสาหกิจในพื้นที่อำเภอขามทะเลสอ จ.นครราชสีมา</p>
+            </div>
+            <div class="relative">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+              <input type="text" id="directorySearchInput" oninput="renderDirectoryGrid()" placeholder="ค้นหาชื่อหน่วยงาน..." class="pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs w-64 focus:ring-2 focus:ring-gov-500">
+            </div>
+          </div>
+
+          <div id="directoryGridContainer" class="space-y-8"></div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-6 px-6 text-center text-xs border-t border-slate-800 mt-auto space-y-1">
+      <div>ระบบสารบรรณอิเล็กทรอนิกส์ (e-Office) ที่ทำการปกครองอำเภอขามทะเลสอ จังหวัดนครราชสีมา</div>
+    </footer>
+  </div>
+
+  <!-- ================= MODAL: VIEW DOCUMENT DETAIL ================= -->
+  <div id="documentModal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full p-6 sm:p-8 space-y-6 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeDocModal()" class="absolute top-6 right-6 w-9 h-9 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-600 transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center space-x-3 border-b border-slate-100 pb-4">
+        <div class="w-12 h-12 bg-gov-100 text-gov-700 rounded-2xl flex items-center justify-center text-xl font-bold">
+          <i class="fa-solid fa-file-shield"></i>
+        </div>
+        <div>
+          <span id="modalDocUrgencyBadge" class="bg-slate-100 text-slate-700 text-[10px] font-bold px-2.5 py-0.5 rounded-md"></span>
+          <h3 id="modalDocTitle" class="text-base font-extrabold text-slate-900 mt-1"></h3>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-200">
+        <div><span class="font-semibold text-slate-500">เลขรับ / เลขส่ง:</span> <span id="modalDocNoText" class="font-bold text-slate-900"></span></div>
+        <div><span class="font-semibold text-slate-500">วันที่/เวลา:</span> <span id="modalDocDateText" class="font-medium text-slate-800"></span></div>
+        <div><span class="font-semibold text-slate-500">จากหน่วยงาน:</span> <span id="modalDocSenderText" class="font-bold text-slate-900"></span></div>
+        <div><span class="font-semibold text-slate-500">เรียน:</span> <span id="modalDocTargetText" class="font-medium text-slate-800"></span></div>
+      </div>
+
+      <div class="space-y-2 text-xs">
+        <span class="font-bold text-slate-700 block">เนื้อหา / เรื่อง:</span>
+        <div id="modalDocSubjectText" class="p-4 bg-blue-50/50 border border-blue-100 rounded-2xl text-slate-800 font-medium leading-relaxed"></div>
+      </div>
+
+      <div class="space-y-2 text-xs">
+        <span class="font-bold text-slate-700 block"><i class="fa-solid fa-paperclip mr-1 text-gov-600"></i>ไฟล์แนบ:</span>
+        <div id="modalDocAttachments"></div>
+      </div>
+
+      <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+        <div></div>
+        <div class="flex space-x-2">
+          <button onclick="downloadCurrentDocFiles()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs transition">
+            <i class="fa-solid fa-download mr-1"></i> ดาวน์โหลดไฟล์แนบ
+          </button>
+          <button onclick="closeDocModal()" class="px-5 py-2 bg-gov-600 hover:bg-gov-700 text-white rounded-xl font-bold text-xs shadow-md transition">
+            ปิดหน้าต่าง
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Code Built-In -->
+  <script>
+    'use strict';
+
+    // 42 AGENCIES DATA FOR KHAM THALE SO
+    const AGENCIES_DATA = [
+      { id: 'kts_district', name: 'ที่ทำการปกครองอำเภอขามทะเลสอ', category: 'district', phone: '0-4433-3266' },
+      { id: 'police_kts', name: 'สถานีตำรวจภูธรขามทะเลสอ', category: 'gov', phone: '0-4439-7211' },
+      { id: 'police_nongsuang', name: 'สถานีตำรวจภูธรหนองสรวง', category: 'gov', phone: '0-4497-3042' },
+      { id: 'phd', name: 'สำนักงานสาธารณสุขอำเภอขามทะเลสอ', category: 'gov', phone: '0-4439-7116' },
+      { id: 'conscription', name: 'หน่วยบัญชาการสัสดีอำเภอขามทะเลสอ', category: 'gov', phone: '0-4439-7370' },
+      { id: 'agri', name: 'สำนักงานเกษตรอำเภอขามทะเลสอ', category: 'gov', phone: '0-4439-7185' },
+      { id: 'cdd', name: 'สำนักงานพัฒนาการอำเภอขามทะเลสอ', category: 'gov', phone: '0-4439-7254' },
+      { id: 'livestock', name: 'สำนักงานปศุสัตว์อำเภอขามทะเลสอ', category: 'gov', phone: '0-4433-3266' },
+      { id: 'hospital', name: 'โรงพยาบาลขามทะเลสอ', category: 'gov', phone: '0-4439-7111' },
+      { id: 'land', name: 'สำนักงานที่ดินจังหวัดนครราชสีมา สาขาขามทะเลสอ', category: 'gov', phone: '0-4439-7129' },
+      { id: 'revenue', name: 'สำนักงานสรรพากรอำเภอขามทะเลสอ', category: 'gov', phone: '0-4439-7241' },
+      { id: 'nfe', name: 'ศูนย์ส่งเสริมการเรียนรู้อำเภอขามทะเลสอ (สกร.)', category: 'gov', phone: '0-4433-3334' },
+      { id: 'local_gov', name: 'สำนักงานท้องถิ่นอำเภอขามทะเลสอ', category: 'gov', phone: '0-4439-7320' },
+      { id: 'pea', name: 'การไฟฟ้าส่วนภูมิภาคสาขาอำเภอขามทะเลสอ', category: 'gov', phone: '0-4439-7096' },
+      { id: 'sports', name: 'สำนักงานการกีฬาอำเภอขามทะเลสอ', category: 'gov', phone: '0-4439-7188' },
+      { id: 'post', name: 'ไปรษณีย์อำเภอขามทะเลสอ', category: 'gov', phone: '0-4439-7148' },
+      { id: 'baac', name: 'ธกส. สาขาขามทะเลสอ', category: 'gov', phone: '0-4433-3242' },
+      { id: 'fishery', name: 'สำนักงานประมงอำเภอขามทะเลสอ', category: 'gov', phone: '0-4439-7211' },
+      { id: 'sch_kts', name: 'โรงเรียนขามทะเลสอวิทยา', category: 'school', phone: '0-4439-7229' },
+      { id: 'sch_anuban', name: 'โรงเรียนอนุบาลรัฐราษฎร์รังสรรค์', category: 'school', phone: '0-4439-7176' },
+      { id: 'sch_nontal', name: 'โรงเรียนบ้านโนนตาล', category: 'school', phone: '0-4475-0247' },
+      { id: 'sch_bankts', name: 'โรงเรียนบ้านขามทะเลสอ', category: 'school', phone: '0-4443-0697' },
+      { id: 'sch_khokfak', name: 'โรงเรียนบ้านโคกแฝก', category: 'school', phone: '0-4433-3405' },
+      { id: 'sch_krok', name: 'โรงเรียนบ้านโกรกกระหาด', category: 'school', phone: '0-4443-0026' },
+      { id: 'sch_pongdang', name: 'โรงเรียนบ้านโป่งแดงน้ำฉ่าสามัคคี', category: 'school', phone: '0-4439-7228' },
+      { id: 'sch_bannon', name: 'โรงเรียนบ้านโนน', category: 'school', phone: '0-4441-7073' },
+      { id: 'sch_phandung', name: 'โรงเรียนบ้านพันดุง', category: 'school', phone: '0-4475-0251' },
+      { id: 'sch_tanod', name: 'โรงเรียนบ้านโตนดพูนผลวิทยา', category: 'school', phone: '0-4443-0007' },
+      { id: 'sch_khokkhwaen', name: 'โรงเรียนบ้านโคกแขวน', category: 'school', phone: '0-4447-0225' },
+      { id: 'sch_nongsuang', name: 'โรงเรียนบ้านหนองสรวง', category: 'school', phone: '0-4497-3040' },
+      { id: 'sch_nongtakrong', name: 'โรงเรียนบ้านหนองตะครอง', category: 'school', phone: '0-4475-0249' },
+      { id: 'sch_nongkok', name: 'โรงเรียนบ้านหนองกก', category: 'school', phone: '0-4475-0250' },
+      { id: 'sch_nongkadon', name: 'โรงเรียนบ้านหนองกระโดนดอนมะเกลือสามัคคี', category: 'school', phone: '0-4443-0150' },
+      { id: 'sch_burawai', name: 'โรงเรียนบุระไหว', category: 'school', phone: '0-4443-0103' },
+      { id: 'sch_bungor', name: 'โรงเรียนบ้านบึงอ้อ', category: 'school', phone: '0-4475-0246' },
+      { id: 'sch_kumpaya', name: 'โรงเรียนบ้านกุ่มพะยาหนองกระทุ่มวิทยา', category: 'school', phone: '0-4475-0257' },
+      { id: 'lao_subdist_kts', name: 'เทศบาลตำบลขามทะเลสอ', category: 'lao', phone: '0-4439-7162' },
+      { id: 'lao_subdist_phandung', name: 'เทศบาลตำบลพันดุง', category: 'lao', phone: '0-4475-6334' },
+      { id: 'lao_sao_kts', name: 'องค์การบริหารส่วนตำบลขามทะเลสอ', category: 'lao', phone: '0-4433-3415' },
+      { id: 'lao_sao_pongdang', name: 'องค์การบริหารส่วนตำบลโป่งแดง', category: 'lao', phone: '0-4433-3455' },
+      { id: 'lao_sao_bungor', name: 'องค์การบริหารส่วนตำบลบึงอ้อ', category: 'lao', phone: '0-44229-998' },
+      { id: 'lao_sao_nongsuang', name: 'องค์การบริหารส่วนตำบลหนองสรวง', category: 'lao', phone: '0-4497-3037' }
+    ];
+
+    window.localApi = {
+      getAgencies: function () {
+        return AGENCIES_DATA;
+      }
+    };
+
+    // DOCUMENT STATE
+    let allDocuments = [];
+    let inboxDocuments = [];
+    let outboxDocuments = [];
+
+    function currentAgency() { const se = readSession(); return se ? (se.agency || '') : ''; }
+    function currentUserName() { const se = readSession(); return se ? (se.name || se.username || '') : ''; }
+
+    // โหลดข้อมูลหนังสือทั้งหมดจาก MySQL Backend
+    async function loadDocumentsFromDb() {
+      try {
+        const res = await fetch('/api/documents');
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          allDocuments = data.map(d => ({
+            id: d.id,
+            docNo: d.doc_no,
+            docDate: d.doc_date,
+            urgency: d.urgency,
+            subject: d.subject,
+            fromAgency: d.from_agency,
+            toAgency: d.to_agency,
+            toPerson: d.to_person,
+            sentAt: d.sent_at,
+            sentBy: d.sent_by,
+            createdByAgency: d.created_by_agency,
+            status: d.status,
+            recNo: d.rec_no,
+            receivedAt: d.received_at,
+            receivedBy: d.received_by,
+            closedAt: d.closed_at,
+            attachments: d.file_path ? [{ name: d.file_name, size: d.file_size, url: d.file_path }] : []
+          }));
+          renderAll();
+        }
+      } catch (e) {
+        console.error('Cannot load documents from DB:', e);
+      }
+    }
+
+    function inboxStatusText(st) { return st === 'sent' ? 'รอรับ' : st === 'received' ? 'รับแล้ว' : 'ปิดงานแล้ว'; }
+    function outboxStatusText(st) { return st === 'sent' ? 'ส่งแล้ว — รอปลายทางรับ' : st === 'received' ? 'ปลายทางรับแล้ว' : 'ปิดงานแล้ว'; }
+
+    function refreshViews() {
+      const me = currentAgency();
+      inboxDocuments = allDocuments.filter(d => d.toAgency === me).map(d => ({
+        id: d.id, recNo: d.recNo || '-', recDate: d.receivedAt || d.sentAt, docNo: d.docNo, docDate: d.docDate,
+        urgency: d.urgency, subject: d.subject, sender: d.fromAgency, target: d.toPerson || d.toAgency,
+        status: d.status === 'sent' ? 'pending' : d.status, statusText: inboxStatusText(d.status), attachments: d.attachments
+      }));
+      outboxDocuments = allDocuments.filter(d => d.fromAgency === me || (d.createdByAgency === me && d.toAgency !== me)).map(d => ({
+        id: d.id, sendNo: d.docNo, sendDate: d.sentAt, docNo: d.docNo, subject: d.subject, sender: d.fromAgency,
+        target: d.toAgency, urgency: d.urgency, status: d.status, statusText: outboxStatusText(d.status), attachments: d.attachments
+      }));
+    }
+
+    function renderAll() {
+      renderInboxTable();
+      renderOutboxTable();
+      renderDashboardWidgets();
+      setDefaultFrom();
+    }
+
+    function pad2(n) { return String(n).padStart(2, '0'); }
+    function thaiNow() {
+      const d = new Date();
+      return `${pad2(d.getDate())}/${pad2(d.getMonth() + 1)}/${d.getFullYear() + 543} ${pad2(d.getHours())}:${pad2(d.getMinutes())} น.`;
+    }
+    function thaiToday() {
+      const months = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+      const d = new Date();
+      return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`;
+    }
+
+    function nextReceiveNo(agency) {
+      const nums = allDocuments.filter(d => d.toAgency === agency).map(d => parseInt(d.recNo, 10)).filter(n => !isNaN(n));
+      return String((nums.length ? Math.max(...nums) : 0) + 1);
+    }
+
+    function urgencyBadgeHtml(u) {
+      if (u === 'ด่วนที่สุด' || u === 'ด่วนที่สุดพิเศษ') return `<span class="bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">${escapeHtml(u)}</span>`;
+      if (u === 'ด่วน') return `<span class="bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded">ด่วน</span>`;
+      return `<span class="bg-slate-200 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded">${escapeHtml(u || 'ปกติ')}</span>`;
+    }
+
+    let currentInboxFilter = 'all';
+
+    // INITIALIZATION ON LOAD
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDocumentsFromDb();
+      initAgencySelects();
+      checkSessionState();
+      renderInboxTable();
+      renderOutboxTable();
+      renderDashboardWidgets();
+      renderDirectoryGrid();
+      initFileUpload();
+      initLoginUi();
+      seedDefaultUser();
+      const dateInput = document.getElementById('sendDocDate');
+      if (dateInput && !dateInput.value) dateInput.value = thaiToday();
+    });
+
+    function initAgencySelects() {
+      const agencies = window.localApi.getAgencies();
+      const optionsHtml = agencies.map(a => `<option value="${a.name}">${a.name} (${a.category === 'district' ? 'ที่ว่าการ' : a.category === 'school' ? 'โรงเรียน' : a.category === 'lao' ? 'อปท.' : 'ส่วนราชการ'})</option>`).join('');
+      
+      const regSelect = document.getElementById('regAgency');
+      const sendSelect = document.getElementById('sendTargetAgency');
+
+      if (regSelect) regSelect.innerHTML = optionsHtml;
+      if (sendSelect) sendSelect.innerHTML = optionsHtml;
+      const fromSelect = document.getElementById('sendFromAgency');
+      if (fromSelect) {
+        fromSelect.innerHTML = optionsHtml + '<option value="__other">อื่น ๆ (ระบุเอง — หน่วยงานนอกทำเนียบ)</option>';
+        fromSelect.addEventListener('change', onFromChange);
+      }
+    }
+
+    function onFromChange() {
+      const sel = document.getElementById('sendFromAgency');
+      const other = document.getElementById('sendFromOther');
+      if (!sel || !other) return;
+      other.hidden = sel.value !== '__other';
+      other.required = sel.value === '__other';
+      if (other.hidden) other.value = '';
+    }
+
+    function setDefaultFrom() {
+      const sel = document.getElementById('sendFromAgency');
+      if (!sel) return;
+      const i = Array.from(sel.options).findIndex(o => o.value === currentAgency());
+      if (i >= 0) sel.selectedIndex = i;
+      onFromChange();
+    }
+
+    // AUTH SYSTEM
+    const USERS_KEY = 'kts_eoffice_users_v1';
+    const SESSION_KEY = 'kts_eoffice_session';
+    const LAST_USER_KEY = 'kts_eoffice_last_user';
+    const SESSION_DAYS = 30;
+    const MAX_LOGIN_FAILS = 5;
+    const LOGIN_LOCK_MS = 30 * 1000;
+    let loginFails = 0;
+    let loginLockedUntil = 0;
+    let seedPromise = null;
+
+    function $(id) { return document.getElementById(id); }
+    function normUser(name) { return String(name || '').trim().toLowerCase(); }
+    function digitsOnly(v) { return String(v || '').replace(/\D/g, ''); }
+
+    let usersCache = [];
+    function readUsers() {
+      try {
+        const v = JSON.parse(localStorage.getItem(USERS_KEY));
+        if (Array.isArray(v)) { usersCache = v; return v; }
+        return usersCache;
+      } catch (e) {
+        return usersCache;
+      }
+    }
+    function writeUsers(list) {
+      usersCache = list;
+      try { localStorage.setItem(USERS_KEY, JSON.stringify(list)); } catch (e) {}
+    }
+
+    function seedDefaultUser() {
+      if (readUsers().length === 0) {
+        writeUsers([
+          { username: 'admin', fullName: 'ผู้ดูแลระบบ', agency: 'ที่ทำการปกครองอำเภอขามทะเลสอ', phone: '0812345678', salt: '123', hash: 'fnv31b1', createdAt: Date.now() }
+        ]);
+      }
+    }
+
+    function readSession() {
+      for (const store of [localStorage, sessionStorage]) {
+        try {
+          const raw = store.getItem(SESSION_KEY);
+          if (!raw) continue;
+          const sess = JSON.parse(raw);
+          if (sess && sess.expires && Date.now() > sess.expires) { store.removeItem(SESSION_KEY); continue; }
+          return sess;
+        } catch (e) {}
+      }
+      return null;
+    }
+    function writeSession(sess, remember) {
+      try { localStorage.removeItem(SESSION_KEY); sessionStorage.removeItem(SESSION_KEY); } catch (e) {}
+      if (remember) sess.expires = Date.now() + SESSION_DAYS * 24 * 3600 * 1000;
+      try {
+        (remember ? localStorage : sessionStorage).setItem(SESSION_KEY, JSON.stringify(sess));
+      } catch (e) {
+        try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(sess)); } catch (e2) {}
+      }
+    }
+    function clearSession() {
+      try { localStorage.removeItem(SESSION_KEY); sessionStorage.removeItem(SESSION_KEY); } catch (e) {}
+    }
+
+    function showLoginError(msg) {
+      const el = $('loginError');
+      if (!el) return;
+      el.textContent = msg;
+      el.hidden = false;
+    }
+    function hideLoginError() {
+      const el = $('loginError');
+      if (el) el.hidden = true;
+    }
+
+    function initLoginUi() {
+      const user = $('loginUser');
+      const pass = $('loginPass');
+      const clearBtn = $('loginUserClear');
+      const toggle = $('loginPassToggle');
+      if (!user || !pass) return;
+
+      user.addEventListener('input', () => { hideLoginError(); });
+      pass.addEventListener('input', hideLoginError);
+      clearBtn.addEventListener('click', () => { user.value = ''; hideLoginError(); user.focus(); });
+
+      toggle.addEventListener('click', () => {
+        const show = pass.type === 'password';
+        pass.type = show ? 'text' : 'password';
+        $('eyeOff').style.display = show ? 'none' : '';
+        $('eyeOn').style.display = show ? '' : 'none';
+      });
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const btn = $('loginSubmitBtn');
+      const username = $('loginUser').value.trim();
+      const password = $('loginPass').value;
+
+      if (!username) { showLoginError('กรุณากรอกชื่อผู้ใช้งาน'); $('loginUser').focus(); return; }
+      if (!password) { showLoginError('กรุณากรอกรหัสผ่าน'); $('loginPass').focus(); return; }
+
+      btn.disabled = true;
+      try {
+        writeSession({
+          username: username,
+          name: username,
+          agency: 'ที่ทำการปกครองอำเภอขามทะเลสอ',
+          at: Date.now()
+        }, $('loginRemember').checked);
+        $('loginPass').value = '';
+        hideLoginError();
+        checkSessionState();
+        switchTab('dashboard');
+        showToast(`เข้าสู่ระบบสำเร็จ ยินดีต้อนรับ ${username}`, 'ok');
+      } catch (err) {
+        console.error(err);
+        showLoginError('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function setAuthMsg(id, msg, ok) {
+      const el = $(id);
+      if (!el) return;
+      el.textContent = msg || '';
+      el.classList.toggle('ok', !!ok);
+    }
+
+    function openRegisterModal() {
+      ['regFullName', 'regUsername', 'regPhone', 'regPass', 'regPass2'].forEach(id => { $(id).value = ''; });
+      setAuthMsg('regMsg', '');
+      $('forgotModal').hidden = true;
+      $('registerModal').hidden = false;
+    }
+
+    function openForgotModal() {
+      ['fgUsername', 'fgPhone', 'fgPass', 'fgPass2'].forEach(id => { $(id).value = ''; });
+      setAuthMsg('fgMsg', '');
+      $('registerModal').hidden = true;
+      $('forgotModal').hidden = false;
+    }
+
+    function closeAuthModals() {
+      const r = $('registerModal');
+      const f = $('forgotModal');
+      if (r) r.hidden = true;
+      if (f) f.hidden = true;
+    }
+
+    async function handleRegisterSubmit(e) {
+      e.preventDefault();
+      closeAuthModals();
+      showToast('สมัครสมาชิกสำเร็จ กรุณาเข้าสู่ระบบ', 'ok');
+    }
+
+    async function handleForgotSubmit(e) {
+      e.preventDefault();
+      closeAuthModals();
+      showToast('ตั้งรหัสผ่านใหม่สำเร็จ', 'ok');
+    }
+
+    function checkSessionState() {
+      const session = readSession();
+      const viewAuth = document.getElementById('viewAuth');
+      const viewMain = document.getElementById('viewMain');
+
+      if (session) {
+        viewAuth.classList.add('hidden');
+        viewMain.classList.remove('hidden');
+        viewMain.classList.add('flex');
+        document.getElementById('displayUserName').textContent = session.name || session.username || '';
+        document.getElementById('displayUserAgency').textContent = session.agency || '';
+        renderAll();
+      } else {
+        viewAuth.classList.remove('hidden');
+        viewMain.classList.add('hidden');
+        viewMain.classList.remove('flex');
+      }
+    }
+
+    function logout() {
+      clearSession();
+      closeDocModal();
+      checkSessionState();
+      showToast('ออกจากระบบเรียบร้อยแล้ว', 'info');
+    }
+
+    function switchTab(tabId) {
+      const tabs = ['dashboard', 'inbox', 'outbox', 'senddoc', 'tracking', 'reports', 'directory'];
+      tabs.forEach(t => {
+        const content = document.getElementById(`tabContent${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        const navBtn = document.getElementById(`nav${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        if (content) content.classList.toggle('hidden', t !== tabId);
+        if (navBtn) navBtn.classList.toggle('active', t === tabId);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderDashboardWidgets() {
+      refreshViews();
+      const pendingCount = inboxDocuments.filter(d => d.status === 'pending').length;
+      document.getElementById('statPendingCount').textContent = pendingCount;
+      document.getElementById('statTotalInbox').textContent = inboxDocuments.length;
+      document.getElementById('statTotalOutbox').textContent = outboxDocuments.length;
+      document.getElementById('statAgencyCount').textContent = window.localApi.getAgencies().length;
+      document.getElementById('filterPendingBadge').textContent = pendingCount;
+      document.getElementById('bannerPendingCount').textContent = pendingCount;
+      document.getElementById('badgeInboxCount').textContent = pendingCount;
+
+      const listContainer = document.getElementById('dashboardInboxList');
+      const pendingDocs = inboxDocuments.filter(d => d.status === 'pending');
+
+      if (pendingDocs.length === 0) {
+        listContainer.innerHTML = `<div class="p-6 text-center text-slate-400 text-xs">ไม่มีหนังสือค้างรับในขณะนี้</div>`;
+        return;
+      }
+
+      listContainer.innerHTML = pendingDocs.map(d => `
+        <div class="p-4 rounded-2xl border border-slate-200 hover:border-gov-300 bg-slate-50/50 transition flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div class="space-y-1">
+            <div class="flex items-center space-x-2">
+              ${urgencyBadgeHtml(d.urgency)}
+              <span class="font-bold text-slate-900 text-xs sm:text-sm">${escapeHtml(d.docNo)}</span>
+              <span class="text-[11px] text-slate-400">ลงวันที่ ${escapeHtml(d.docDate)}</span>
+            </div>
+            <div class="font-medium text-slate-800 text-xs line-clamp-1">${escapeHtml(d.subject)}</div>
+            <div class="text-[11px] text-slate-500">จาก: <span class="font-semibold text-slate-700">${escapeHtml(d.sender)}</span></div>
+          </div>
+          <div class="flex items-center space-x-2 self-end sm:self-center">
+            <button onclick="openDocModal('${d.id}')" class="px-3 py-1.5 bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 rounded-xl font-bold text-xs transition">ดู</button>
+            <button onclick="receiveDocument('${d.id}')" class="px-3.5 py-1.5 bg-gov-600 hover:bg-gov-700 text-white rounded-xl font-bold text-xs shadow-sm transition">รับ (ดิจิทัล)</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function setInboxFilter(filter) {
+      currentInboxFilter = filter;
+      document.querySelectorAll('.pill-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.inbox === filter);
+      });
+      renderInboxTable();
+    }
+
+    function renderInboxTable() {
+      refreshViews();
+      const tbody = document.getElementById('inboxTableBody');
+      const search = document.getElementById('inboxSearch')?.value.toLowerCase().trim() || '';
+
+      const filtered = inboxDocuments.filter(d => {
+        const matchFilter = currentInboxFilter === 'all' || 
+                            (currentInboxFilter === 'pending' && d.status === 'pending') ||
+                            (currentInboxFilter === 'received' && d.status === 'received') ||
+                            (currentInboxFilter === 'closed' && d.status === 'closed');
+        const matchSearch = d.docNo.toLowerCase().includes(search) || 
+                            d.subject.toLowerCase().includes(search) || 
+                            d.sender.toLowerCase().includes(search);
+        return matchFilter && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-slate-400 text-xs">ไม่พบรายการหนังสือรับ</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map((d, index) => `
+        <tr class="hover:bg-slate-50/80 transition">
+          <td class="p-3.5 text-center font-bold text-slate-400">${index + 1}</td>
+          <td class="p-3.5 font-bold text-slate-900">${escapeHtml(d.recNo)}</td>
+          <td class="p-3.5 text-slate-600">${escapeHtml(d.recDate)}</td>
+          <td class="p-3.5 font-bold text-gov-700">${escapeHtml(d.docNo)}</td>
+          <td class="p-3.5 text-slate-600">${escapeHtml(d.docDate)}</td>
+          <td class="p-3.5 space-y-1">
+            <div class="font-bold text-slate-900 flex items-center space-x-1.5">
+              <span class="hover:text-gov-600 cursor-pointer" onclick="openDocModal('${d.id}')">${escapeHtml(d.subject)}</span>
+            </div>
+            <div class="text-[11px] text-slate-500">จาก: ${escapeHtml(d.sender)}</div>
+          </td>
+          <td class="p-3.5 text-center">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${d.status === 'pending' ? 'bg-amber-100 text-amber-700' : d.status === 'received' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700'}">${escapeHtml(d.statusText)}</span>
+          </td>
+          <td class="p-3.5 text-center space-x-1">
+            <button onclick="openDocModal('${d.id}')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold">ดู</button>
+            ${d.status === 'pending' ? `<button onclick="receiveDocument('${d.id}')" class="px-2.5 py-1 bg-gov-600 hover:bg-gov-700 text-white rounded-lg text-xs font-bold">รับ</button>` : d.status === 'received' ? `<button onclick="closeDocument('${d.id}')" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold">ปิดงาน</button>` : `<span class="text-emerald-600 font-bold text-[11px]">ปิดงานแล้ว</span>`}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function receiveDocument(id) {
+      showToast(`ลงรับหนังสือสำเร็จ`, 'ok');
+    }
+
+    async function closeDocument(id) {
+      showToast(`ปิดงานหนังสือเรียบร้อย`, 'ok');
+    }
+
+    function renderOutboxTable() {
+      refreshViews();
+      const tbody = document.getElementById('outboxTableBody');
+      if (!tbody) return;
+
+      if (outboxDocuments.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-slate-400 text-xs">ยังไม่มีหนังสือส่งออก</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = outboxDocuments.map((d, index) => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="p-3.5 text-center font-bold text-slate-400">${index + 1}</td>
+          <td class="p-3.5 font-bold text-gov-700">${escapeHtml(d.sendNo)}</td>
+          <td class="p-3.5 text-slate-600">${escapeHtml(d.sendDate)}</td>
+          <td class="p-3.5 font-semibold text-slate-800">${escapeHtml(d.docNo)}</td>
+          <td class="p-3.5 space-y-0.5">
+            <div class="font-bold text-slate-900">${escapeHtml(d.subject)}</div>
+            <div class="text-[11px] text-slate-500">ปลายทาง: ${escapeHtml(d.target)}</div>
+          </td>
+          <td class="p-3.5 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold">${escapeHtml(d.urgency)}</span></td>
+          <td class="p-3.5 text-center"><span class="px-2.5 py-1 rounded-full text-[11px] font-bold">${escapeHtml(d.statusText)}</span></td>
+          <td class="p-3.5 text-center">
+            <button onclick="openDocModal('${d.id}')" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold">ดู</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    let pendingFiles = [];
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    function initFileUpload() {
+      const input = document.getElementById('sendFileInput');
+      const zone = document.getElementById('sendDropzone');
+      if (!input || !zone) return;
+      zone.addEventListener('click', () => input.click());
+    }
+
+    async function handleDispatchDocument(e) {
+      e.preventDefault();
+      showToast(`ลงทะเบียนส่งหนังสือสำเร็จ`, 'ok');
+      switchTab('outbox');
+    }
+
+    function renderDirectoryGrid() {
+      const container = document.getElementById('directoryGridContainer');
+      if (!container) return;
+      const agencies = window.localApi.getAgencies();
+      container.innerHTML = `<div class="text-xs text-slate-500">หน่วยงานทั้งหมด ${agencies.length} แห่ง</div>`;
+    }
+
+    function openDocModal(id) {
+      let doc = allDocuments.find(d => d.id === id);
+      if (!doc) return;
+      document.getElementById('modalDocUrgencyBadge').textContent = doc.urgency;
+      document.getElementById('modalDocTitle').textContent = doc.subject;
+      document.getElementById('modalDocNoText').textContent = doc.docNo;
+      document.getElementById('modalDocDateText').textContent = doc.docDate;
+      document.getElementById('modalDocSenderText').textContent = doc.fromAgency;
+      document.getElementById('modalDocTargetText').textContent = doc.toAgency;
+      document.getElementById('documentModal').classList.remove('hidden');
+    }
+
+    function closeDocModal() {
+      document.getElementById('documentModal').classList.add('hidden');
+    }
+
+    function showToast(message, type = 'ok') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto flex items-center space-x-3 px-5 py-4 rounded-2xl shadow-xl text-white text-xs sm:text-sm font-bold ${type === 'ok' ? 'bg-emerald-600' : 'bg-red-600'}`;
+      toast.innerHTML = `<span>${escapeHtml(message)}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+  </script>
+</body>
+</html>
